@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import SideBar from "../app/_components/sidebar";
 
 export const metadata: Metadata = {
   title: "Bhannk",
@@ -14,10 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-      >
-        <h1>Bhannk</h1>
-        {children}
+      <body className="flex">
+        <SideBar />
+        <div className="flex-grow">{children}</div>
       </body>
     </html>
   );
