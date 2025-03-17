@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="flex">
         <SideBar />
-        <div className="flex-grow">{children}</div>
+        <div className="flex-grow ">{children}</div>
       </body>
     </html>
   );
