@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Key, ReactNode, useState } from "react";
+import { Key, ReactNode } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { LiaMoneyCheckAltSolid } from "react-icons/lia";
 import { FaBitcoin, FaCoins } from "react-icons/fa6";
@@ -13,8 +13,12 @@ interface SideMenu {
   link: string;
 }
 
-export default function SideBar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+interface SideBarProps {
+  isCollapsed: boolean;
+  setIsCollapsed: (collapsed: boolean) => void;
+}
+export default function SideBar({ isCollapsed, setIsCollapsed }: SideBarProps) {
+  // const [isCollapsed, setIsCollapsed] = useState(false);
 
   const menus: SideMenu[] = [
     {
@@ -38,7 +42,7 @@ export default function SideBar() {
   ];
 
   return (
-    <div className={`h-screen text-white flex flex-col ${isCollapsed ? "w-16" : "w-48"} transition-all duration-300`}>
+    <div className={`fixed top-0 left-0 h-screen text-white flex flex-col ${isCollapsed ? "w-16" : "w-48"} transition-all duration-300`}>
       <div className="flex items-center justify-between h-16 border-b border-gray-700 p-4">
         {!isCollapsed && (
           <h1 className="text-lg font-bold">
@@ -54,7 +58,7 @@ export default function SideBar() {
       <div className="flex-1 flex flex-col justify-between overflow-hidden">
         <nav className="mt-10">
           {menus.map((menu) => (
-            <Link href={menu.link} key={menu.id}>
+            <Link href={menu.link} key={menu.id} prefetch={true}>
               <div
                 className={`flex items-center py-3 px-4 rounded transition duration-300 hover:bg-[#1B1A1D] hover:text-white-400 ${
                   isCollapsed ? "justify-center" : ""}`}
