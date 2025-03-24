@@ -12,7 +12,7 @@ export async function GET() {
         per_page: 50,
         page: 1,
         sparkline: false,
-        price_change_percentage: "24h,30d", // Fetch daily & monthly changes
+        price_change_percentage: "24h", // Fetch daily & monthly changes
       },
     });
 
@@ -24,7 +24,6 @@ export async function GET() {
       currentPrice: crypto.current_price,
       marketCap: crypto.market_cap.toLocaleString(),
       change24h: crypto.price_change_percentage_24h?.toFixed(2) ?? "N/A",
-      change30d: crypto.price_change_percentage_30d?.toFixed(2) ?? "N/A",
     }));
 
     return NextResponse.json({ cryptos });

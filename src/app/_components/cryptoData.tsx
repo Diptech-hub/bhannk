@@ -9,7 +9,6 @@ interface Crypto {
   currentPrice: number;
   marketCap: string;
   change24h: string;
-  change30d: string;
   image: string;
 }
 
@@ -53,7 +52,6 @@ const CryptoList = () => {
               <th className="border p-2">Symbol</th>
               <th className="border p-2">Price (USD)</th>
               <th className="border p-2">24h Change (%)</th>
-              <th className="border p-2">30d Change (%)</th>
               <th className="border p-2">Market Cap</th>
             </tr>
           </thead>
@@ -89,15 +87,6 @@ const CryptoList = () => {
                     }`}
                   >
                     {crypto.change24h}%
-                  </td>
-                  <td
-                    className={`border p-2 font-semibold ${
-                      parseFloat(crypto.change30d) >= 0
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
-                  >
-                    {crypto.change30d}%
                   </td>
                   <td className="border p-2">${crypto.marketCap}</td>
                 </tr>
