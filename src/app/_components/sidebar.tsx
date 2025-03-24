@@ -42,7 +42,7 @@ export default function SideBar({ isCollapsed, setIsCollapsed }: SideBarProps) {
   ];
 
   return (
-    <div className={`fixed top-0 left-0 h-screen text-white flex flex-col ${isCollapsed ? "w-16" : "w-48"} transition-all duration-300`}>
+    <div className={`fixed top-0 left-0 h-screen text-white flex flex-col shadow-lg${isCollapsed ? "w-16" : "w-48"} transition-all duration-300`}>
       <div className="flex items-center justify-between h-16 border-b border-gray-700 p-4">
         {!isCollapsed && (
           <h1 className="text-lg font-bold">
@@ -50,7 +50,7 @@ export default function SideBar({ isCollapsed, setIsCollapsed }: SideBarProps) {
           </h1>
         )}
 
-        <button onClick={() => setIsCollapsed(!isCollapsed)} className="focus:outline-none">
+        <button onClick={() => setIsCollapsed(!isCollapsed)} className="focus:outline-none cursor-pointer">
           {isCollapsed ? <AiOutlineMenu size={16} /> : <AiOutlineClose size={16} />}
         </button>
       </div>
