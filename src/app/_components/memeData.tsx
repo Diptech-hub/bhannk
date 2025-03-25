@@ -28,6 +28,8 @@ const MemeCoins = () => {
 
   useEffect(() => {
     const fetchMemeCoins = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const response = await axios.get("/api/meme");
         setMemeCoins(response.data.memeCoins || []);
@@ -43,85 +45,105 @@ const MemeCoins = () => {
   }, []);
 
   return (
-    <div className="p-4 border rounded-lg shadow-lg w-full max-w-6xl">
-      <h2 className="text-lg font-bold mb-4">Top Meme Coins</h2>
+    <div className="p-6 bg-[#1F1F21] text-white rounded-lg shadow-lg w-full max-w-lg">
+      {/* Main Title */}
+      <h2 className="text-xl font-bold mb-6">Top Meme Coins</h2>
+
+      {/* Table Headers */}
+      <div className="flex justify-between px-3 py-2 bg-[#2A2A2D] rounded-lg">
+        <span className="text-gray-400 text-sm font-semibold w-6">#</span>
+        <span className="text-gray-400 text-sm font-semibold flex-1">Coin</span>
+        <span className="text-gray-400 text-sm font-semibold w-24 text-right">
+          Price
+        </span>
+        <span className="text-gray-400 text-sm font-semibold w-24 text-right">
+          Change
+        </span>
+        <span className="text-gray-400 text-sm font-semibold w-20 text-right">
+          Chart
+        </span>
+      </div>
 
       {loading ? (
-        <p>Loading meme coins...</p>
+        <p className="text-center text-gray-400 mt-4">Loading meme coins...</p>
       ) : error ? (
-        <p className="text-red-500">{error}</p>
+        <p className="text-red-400 text-center mt-4">{error}</p>
+      ) : memeCoins.length === 0 ? (
+        <p className="text-center text-gray-400 p-4 mt-4">
+          No meme coins available
+        </p>
       ) : (
-        <table className="w-full border-collapse border border-gray-500">
-          <thead>
-            <tr className="">
-              <th className="border p-2">Logo</th>
-              <th className="border p-2">Name</th>
-              <th className="border p-2">Symbol</th>
-              <th className="border p-2">Price (USD)</th>
-              <th className="border p-2">24h Change (%)</th>
-              <th className="border p-2">Sparkline (7d)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {memeCoins.length === 0 ? (
-              <tr>
-                <td colSpan={6} className="text-center p-4">
-                  No meme coins available
-                </td>
-              </tr>
-            ) : (
-              memeCoins.map((coin) => (
-                <tr key={coin.id} className="border">
-                  <td className="border p-2">
-                    <img
-                      src={coin.image}
-                      alt={coin.name}
-                      width={30}
-                      height={30}
-                      className="rounded-full"
-                    />
-                  </td>
-                  <td className="border p-2">{coin.name}</td>
-                  <td className="border p-2 font-bold">
+        <div className="flex flex-col space-y-3 mt-2">
+          {memeCoins.map((coin, index) => (
+            <div
+              key={coin.id}
+              className="flex items-center justify-between py-3 px-3 hover:bg-[#2A2A2D] rounded-lg transition"
+            >
+              {/* Numbering */}
+              <span className="text-gray-400 text-sm font-semibold w-6">
+                {index + 1}.
+              </span>
+
+              {/* Coin Logo & Name */}
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <img
+                  src={coin.image}
+                  alt={coin.name}
+                  width={30}
+                  height={30}
+                  className="rounded-full flex-shrink-0"
+                />
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold truncate w-24">
+                    {coin.name}
+                  </p>
+                  <p className="text-gray-400 text-xs">
                     {coin.symbol.toUpperCase()}
-                  </td>
-                  <td className="border p-2">
-                    ${coin.current_price.toFixed(4)}
-                  </td>
-                  <td
-                    className={`border p-2 font-semibold ${
-                      coin.price_change_percentage_24h >= 0
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
+                  </p>
+                </div>
+              </div>
+
+              {/* Price */}
+              <div className="text-sm font-medium w-24 text-right">
+                ${coin.current_price.toFixed(4)}
+              </div>
+
+              {/* Change */}
+              <div
+                className={`text-xs font-semibold w-24 text-right ${
+                  coin.price_change_percentage_24h >= 0
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
+                {coin.price_change_percentage_24h.toFixed(2)}%
+              </div>
+
+              {/* Sparkline Chart */}
+              <div className="w-20 h-8 flex-shrink-0">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    data={coin.sparkline_in_7d.price.map((price, i) => ({
+                      index: i,
+                      price,
+                    }))}
                   >
-                    {coin.price_change_percentage_24h.toFixed(2)}%
-                  </td>
-                  <td className="border p-2">
-                    <ResponsiveContainer width={100} height={40}>
-                      <LineChart
-                        data={coin.sparkline_in_7d.price.map(
-                          (price, index) => ({ index, price })
-                        )}
-                      >
-                        <XAxis hide dataKey="index" />
-                        <YAxis hide />
-                        <Tooltip />
-                        <Line
-                          type="monotone"
-                          dataKey="price"
-                          stroke="#3182CE"
-                          strokeWidth={2}
-                          dot={false}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                    <XAxis hide dataKey="index" />
+                    <YAxis hide />
+                    <Tooltip />
+                    <Line
+                      type="monotone"
+                      dataKey="price"
+                      stroke="#3182CE"
+                      strokeWidth={1.5}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
