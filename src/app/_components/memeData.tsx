@@ -46,10 +46,8 @@ const MemeCoins = () => {
 
   return (
     <div className="p-6 bg-[#1F1F21] text-white rounded-lg shadow-lg w-full max-w-lg">
-      {/* Main Title */}
-      <h2 className="text-xl font-bold mb-6">Top Meme Coins</h2>
+      <h2 className="text-xl font-bold mb-6">Meme Coins Overview</h2>
 
-      {/* Table Headers */}
       <div className="flex justify-between px-3 py-2 bg-[#2A2A2D] rounded-lg">
         <span className="text-gray-400 text-sm font-semibold w-6">#</span>
         <span className="text-gray-400 text-sm font-semibold flex-1">Coin</span>
@@ -77,7 +75,7 @@ const MemeCoins = () => {
           {memeCoins.map((coin, index) => (
             <div
               key={coin.id}
-              className="flex items-center justify-between py-3 px-3 hover:bg-[#2A2A2D] rounded-lg transition"
+              className="flex items-center justify-between py-3 px-3 border-b border-[#2A2A2D] hover:bg-[#2A2A2D] rounded-lg transition"
             >
               {/* Numbering */}
               <span className="text-gray-400 text-sm font-semibold w-6">

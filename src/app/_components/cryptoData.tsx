@@ -68,7 +68,7 @@ const CryptoList = () => {
                 cryptos.map((crypto, index) => (
                   <tr
                     key={crypto.symbol}
-                    className="border-b border-gray-700 hover:bg-[#2A2A2D] transition"
+                    className="border-b border-[#2A2A2D] hover:bg-[#2A2A2D] transition rounded-lg"
                   >
                     <td className="p-3">{index + 1}</td>
                     <td className="p-3">

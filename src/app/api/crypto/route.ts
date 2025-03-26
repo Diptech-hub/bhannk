@@ -12,7 +12,7 @@ export async function GET() {
         per_page: 50,
         page: 1,
         sparkline: false,
-        price_change_percentage: "24h", // Fetch daily & monthly changes
+        price_change_percentage: "24h", 
       },
     });
 
