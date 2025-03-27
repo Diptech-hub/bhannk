@@ -5,6 +5,8 @@ import axios from "axios";
 
 interface Stock {
   symbol: string;
+  name: string;
+  logo?: string | null;
   currentPrice?: number;
   highPrice?: number;
   lowPrice?: number;
@@ -47,8 +49,10 @@ const StockList = () => {
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="bg-[#2A2A2D] text-gray-300">
+              <tr className="bg-[#2A2A2D] text-gray-300 rounded-lg">
                 <th className="p-3 text-left">#</th>
+                <th className="p-3 text-left">Logo</th>
+                <th className="p-3 text-left">Name</th>
                 <th className="p-3 text-left">Symbol</th>
                 <th className="p-3 text-left">Current Price</th>
                 <th className="p-3 text-left">High</th>
@@ -64,12 +68,44 @@ const StockList = () => {
                   className="border-b border-[#2A2A2D] hover:bg-[#2A2A2D] transition rounded-lg mt-2"
                 >
                   <td className="p-3">{index + 1}</td>
-                  <td className="p-3 font-bold text-gray-400">{stock.symbol}</td>
-                  <td className="p-3">{stock.currentPrice !== undefined ? `$${stock.currentPrice.toFixed(2)}` : "N/A"}</td>
-                  <td className="p-3 text-green-500">{stock.highPrice !== undefined ? `$${stock.highPrice.toFixed(2)}` : "N/A"}</td>
-                  <td className="p-3 text-red-500">{stock.lowPrice !== undefined ? `$${stock.lowPrice.toFixed(2)}` : "N/A"}</td>
-                  <td className="p-3">{stock.openPrice !== undefined ? `$${stock.openPrice.toFixed(2)}` : "N/A"}</td>
-                  <td className="p-3">{stock.prevClose !== undefined ? `$${stock.prevClose.toFixed(2)}` : "N/A"}</td>
+                  <td className="p-3">
+                    {stock.logo ? (
+                      <img
+                        src={stock.logo}
+                        alt={stock.name}
+                        className="w-10 h-10 rounded-full"
+                      />
+                    ) : (
+                      "N/A"
+                    )}
+                  </td>
+                  <td className="p-3 font-bold text-gray-400">{stock.name}</td>
+                  <td className="p-3">{stock.symbol}</td>
+                  <td className="p-3">
+                    {stock.currentPrice !== undefined
+                      ? `$${stock.currentPrice.toFixed(2)}`
+                      : "N/A"}
+                  </td>
+                  <td className="p-3 text-green-500">
+                    {stock.highPrice !== undefined
+                      ? `$${stock.highPrice.toFixed(2)}`
+                      : "N/A"}
+                  </td>
+                  <td className="p-3 text-red-500">
+                    {stock.lowPrice !== undefined
+                      ? `$${stock.lowPrice.toFixed(2)}`
+                      : "N/A"}
+                  </td>
+                  <td className="p-3">
+                    {stock.openPrice !== undefined
+                      ? `$${stock.openPrice.toFixed(2)}`
+                      : "N/A"}
+                  </td>
+                  <td className="p-3">
+                    {stock.prevClose !== undefined
+                      ? `$${stock.prevClose.toFixed(2)}`
+                      : "N/A"}
+                  </td>
                 </tr>
               ))}
             </tbody>
